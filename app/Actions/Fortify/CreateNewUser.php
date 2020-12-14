@@ -25,8 +25,8 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        /*
-        // Así estaba antes... (original)
+        
+        /*// Así estaba antes... (original)
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
