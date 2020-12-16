@@ -98,4 +98,10 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function tramite()
+    {
+        return $this
+            ->hasOne('App\Models\Tramite');
+    }
 }

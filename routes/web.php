@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TramiteController;
+
+use App\Models\TramiteTipo;
+use App\Models\Tramite;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +35,34 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/admin/', [HomeController::class, 'panelControlAdmin'])
     ->name('panelControlAdmin');
+
+// Tramites 
+// TODO: Crear archivo de configuración de urls y en RouteServiceProvider.php
+/*Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/tramite/certificado-ausencia/', [TramiteController::class, 'index'])
+    ->name('panelControlAdmin');*/
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/tramite/{tramiteTipo:slug}/{tramite?}', [TramiteController::class, 'index'])
+    ->name('tramite');
+
+/*
+// Modos Implícitos
+// Con este modo debemos agregar una función en el Modelo TramiteTipo (getRouteKeyName())
+Route::get('/tramite/{tramiteTipo}/', function (TramiteTipo $tramiteTipo) {
+    return $tramiteTipo;
+});
+
+// Con este modo no debemos configurar nada más, solo traer la clase!
+Route::get('/tramite/{tramiteTipo:slug}/', function (TramiteTipo $tramiteTipo) {
+    return $tramiteTipo;
+});
+
+
+// Modo Explícito
+// Además hay que agregar en RouteServiceProvider.php:
+// Route::model('tramiteTipo', TramiteTipo::class);
+Route::get('/tramite/{tramiteTipo}/', function (TramiteTipo $tramiteTipo) {
+    return $tramiteTipo;
+});
+*/
