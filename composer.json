@@ -13,10 +13,12 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.2.4",
+        "jenssegers/mongodb": "^3.8",
         "laravel/framework": "^8.12",
         "laravel/jetstream": "^1.6",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
+        "mongodb/mongodb": "^1.8",
         "tightenco/ziggy": "^0.9.4"
     },
     "require-dev": {
