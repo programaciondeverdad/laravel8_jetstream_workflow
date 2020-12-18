@@ -8,6 +8,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\TramiteTipo;
 use App\Models\Tramite;
+use App\Models\MongoTramite;
 
 class TramiteController extends Controller
 {
@@ -35,6 +36,9 @@ class TramiteController extends Controller
             ])->first() ?? abort(404);
         }
         // TODOs
+        // TODO: Traer un tramite de mongoDB
+        // $tramites = MongoTramite::all();
+        // dd($tramites);
         // TODO: Conocer el paso en que está el tramite si se busca por ID
 
         // TODO: Agregar validación de rol y usuario creador del tramite?

@@ -4316,6 +4316,49 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_FormSection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/FormSection */ "./resources/js/Jetstream/FormSection.vue");
+/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
+/* harmony import */ var _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Jetstream/InputError */ "./resources/js/Jetstream/InputError.vue");
+/* harmony import */ var _Jetstream_Label__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/Label */ "./resources/js/Jetstream/Label.vue");
+/* harmony import */ var _Jetstream_ActionMessage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Jetstream/ActionMessage */ "./resources/js/Jetstream/ActionMessage.vue");
+/* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4344,10 +4387,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['tramite'],
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
+    JetActionMessage: _Jetstream_ActionMessage__WEBPACK_IMPORTED_MODULE_6__["default"],
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__["default"],
+    JetFormSection: _Jetstream_FormSection__WEBPACK_IMPORTED_MODULE_2__["default"],
+    JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__["default"],
+    JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_4__["default"],
+    JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_5__["default"],
+    JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_7__["default"]
+  },
+  data: function data() {
+    return {
+      form: this.$inertia.form({
+        '_method': 'PUT',
+        // name: this.user.name,
+        // email: this.user.email,
+        nombre: null,
+        email: null
+      }, {
+        bag: 'updateProfileInformation',
+        resetOnSuccess: false
+      }),
+      photoPreview: null
+    };
+  },
+  methods: {
+    updateProfileInformation: function updateProfileInformation() {
+      this.form.post(route('user-profile-information.update'), {
+        preserveScroll: true
+      });
+    }
   }
 });
 
@@ -49275,7 +49354,135 @@ var render = function() {
                     _vm._v(" "),
                     _c("p", [_vm._v("Tramite: " + _vm._s(_vm.tramite.id))])
                   ]
-                : _vm._e()
+                : _vm._e(),
+              _vm._v(" "),
+              _c("jet-form-section", {
+                on: { submitted: _vm.updateProfileInformation },
+                scopedSlots: _vm._u([
+                  {
+                    key: "title",
+                    fn: function() {
+                      return [
+                        _vm._v(
+                          "\n                        Profile Information\n                    "
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "description",
+                    fn: function() {
+                      return [
+                        _vm._v(
+                          "\n                        Update your account's profile information and email address.\n                    "
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "form",
+                    fn: function() {
+                      return [
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6 sm:col-span-4" },
+                          [
+                            _c("jet-label", {
+                              attrs: { for: "nombre", value: "Nombre" }
+                            }),
+                            _vm._v(" "),
+                            _c("jet-input", {
+                              staticClass: "mt-1 block w-full",
+                              attrs: {
+                                id: "nombre",
+                                type: "text",
+                                autocomplete: "nombre"
+                              },
+                              model: {
+                                value: _vm.form.nombre,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "nombre", $$v)
+                                },
+                                expression: "form.nombre"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("jet-input-error", {
+                              staticClass: "mt-2",
+                              attrs: { message: _vm.form.error("nombre") }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-span-6 sm:col-span-4" },
+                          [
+                            _c("jet-label", {
+                              attrs: { for: "email", value: "Email" }
+                            }),
+                            _vm._v(" "),
+                            _c("jet-input", {
+                              staticClass: "mt-1 block w-full",
+                              attrs: { id: "email", type: "email" },
+                              model: {
+                                value: _vm.form.email,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "email", $$v)
+                                },
+                                expression: "form.email"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("jet-input-error", {
+                              staticClass: "mt-2",
+                              attrs: { message: _vm.form.error("email") }
+                            })
+                          ],
+                          1
+                        )
+                      ]
+                    },
+                    proxy: true
+                  },
+                  {
+                    key: "actions",
+                    fn: function() {
+                      return [
+                        _c(
+                          "jet-action-message",
+                          {
+                            staticClass: "mr-3",
+                            attrs: { on: _vm.form.recentlySuccessful }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Saved.\n                        "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "jet-button",
+                          {
+                            class: { "opacity-25": _vm.form.processing },
+                            attrs: { disabled: _vm.form.processing }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Save\n                        "
+                            )
+                          ]
+                        )
+                      ]
+                    },
+                    proxy: true
+                  }
+                ])
+              })
             ],
             2
           )
