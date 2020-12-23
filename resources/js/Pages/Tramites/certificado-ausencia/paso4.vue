@@ -9,7 +9,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <h1>Paso 1</h1>
+                    <h1>Paso 4</h1>
                     
                     <!-- Si viene el numero de tramite significa que estamos editando un paso -->
                     <template v-if="tramite.id">
@@ -61,6 +61,7 @@
                                 Save
                             </jet-button>
                         </template>
+
                     </jet-form-section>
 
                     
@@ -96,11 +97,10 @@
         },
 
         data() {
-            console.log(this.datos);
             return {
                 form: this.$inertia.form({
                     '_method': 'PUT',
-                    paso: 1,
+                    paso: 4,
                     datos: {
                         name: this.datos.name,
                         email: this.datos.email
@@ -120,7 +120,6 @@
                     preserveScroll: true
                 });
             },
-
         },
     }
 </script>
