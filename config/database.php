@@ -91,15 +91,16 @@ return [
             'prefix_indexes' => true,
         ],
 
+
         'mongodb' => [
             'driver' => 'mongodb',
             'host' => env('MONGO_DB_HOST', 'localhost'),
             'port' => env('MONGO_DB_PORT', 27017),
-            'database' => env('MONGO_DB_DATABASE'),
-            'username' => env('MONGO_DB_USERNAME'),
-            'password' => env('MONGO_DB_PASSWORD'),
+            'database' => null,
+            'username' => null,
+            'password' => null,
             'options' => [
-                'database' => 'styde' // sets the authentication database required by mongo 3
+                'database' => env('MONGO_DB_DATABASE') // sets the authentication database required by mongo 3
             ]
         ],
 

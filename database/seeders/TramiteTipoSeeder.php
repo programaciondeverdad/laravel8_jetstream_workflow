@@ -17,13 +17,15 @@ class TramiteTipoSeeder extends Seeder
         $tramiteTipo = new TramiteTipo();
         $tramiteTipo->nombre = 'Certificado de Ausencia';
         $tramiteTipo->slug = 'certificado-ausencia';
+        $tramiteTipo->cant_pasos = 4;
         $tramiteTipo->precio = 500.0;
         $tramiteTipo->save();
         
         $tramiteTipo = new TramiteTipo();
         $tramiteTipo->nombre = 'Certificado de Viaje';
         $tramiteTipo->slug = 'certificado-viaje';
-        $tramiteTipo->precio = 890.10;
+        $tramiteTipo->cant_pasos = 2;
+        $tramiteTipo->precio = 500.0;
         $tramiteTipo->save();
     }
 }
