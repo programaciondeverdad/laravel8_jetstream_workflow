@@ -31,24 +31,19 @@
                         </template>
 
                         <template #form>
-                            <!-- Nombre -->
+                            <!-- Firma -->
                             <div class="col-span-6 sm:col-span-4">
-                                <jet-label for="name" value="Nombre" />
-                                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.datos.name" autocomplete="name" />
-                                <jet-input-error :message="form.error('name')" class="mt-2" />
+                                <jet-label for="firma" value="Nombre" />
+                                <jet-input id="firma" type="text" class="mt-1 block w-full" v-model="form.datos.firma" autocomplete="name" />
+                                <jet-input-error :message="form.error('firma')" class="mt-2" />
                             </div>
 
-                            <!-- Email -->
+                            <!-- Apruebo Ausencia -->
                             <div class="col-span-6 sm:col-span-4">
-                                <jet-label for="email" value="Email" />
-                                <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.datos.email" />
-                                <jet-input-error :message="form.error('email')" class="mt-2" />
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <jet-label for="tramiteTipo" value="tramiteTipo" />
-                                <jet-input id="tramiteTipo" tramiteTipo="email" class="mt-1 block w-full" v-model="form.tramiteTipo" />
-                                <jet-input-error :message="form.error('tramiteTipo')" class="mt-2" />
+                                <jet-label for="apruebo_ausencia" value="Apruebo y Acepto Ausencia" />
+                                <input id="apruebo_ausencia" type="checkbox" v-model="form.datos.apruebo_ausencia">
+                                
+                                <jet-input-error :message="form.error('apruebo_ausencia')" class="mt-2" />
                             </div>
                         </template>
 
@@ -102,8 +97,6 @@
                     '_method': 'PUT',
                     paso: 4,
                     datos: {
-                        name: this.datos.name,
-                        email: this.datos.email
                     },
                     tramiteTipo: this.tramiteTipo,
                     tramite: this.tramite.id,

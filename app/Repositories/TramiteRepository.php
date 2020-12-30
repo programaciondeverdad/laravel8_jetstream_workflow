@@ -8,7 +8,7 @@ use App\Models\MongoTramite;
 
 class TramiteRepository
 {
-    
+    // TODO: Revisar la variable $tramite y $tramite_id
     public function findTramite(int $tramite_id, TramiteTipo $tramiteTipo)
     {
         if(!empty($tramite_id))

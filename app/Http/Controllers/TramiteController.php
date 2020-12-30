@@ -11,6 +11,7 @@ use App\Models\Tramite;
 use App\Models\MongoTramite;
 use App\Repositories\TramiteRepository;
 use App\Services\TramiteService;
+use App\Factories\PasoFactoryProducer;
 
 class TramiteController extends Controller
 {
@@ -35,8 +36,6 @@ class TramiteController extends Controller
      */
     public function index(Request $request, TramiteTipo $tramiteTipo, Tramite $tramite)
     {
-        // TODO: Factory Pattern: Validar tramites_tipos, pasos y que rol puede acceder
-        $request->user()->authorizeRoles(['user', 'admin']);
         $nextPaso = 1; // Iniciamos siempre con el paso1
         $lastPasoCompleted = 1;
         $actualPaso = 1;
@@ -53,6 +52,12 @@ class TramiteController extends Controller
             $actualPaso = $lastPasoCompleted + 1;
         }
 
+        /*Factory Pattern para la creación de Pasos para validar y otras cosas...*/
+        $pasoFactory = PasoFactoryProducer::getFactory($tramiteTipo->id);
+        // Obtiene un objeto Paso y llama al método getAutorizeRoles
+        $paso = $pasoFactory->getPaso($nextPaso);
+
+        $request->user()->authorizeRoles($paso->getAutorizeRoles());
         
         // TODO: Agregar validación usuario creador del tramite?
         return Inertia::render("Tramites/{$tramiteTipo->slug}/paso{$nextPaso}", [
@@ -76,13 +81,14 @@ class TramiteController extends Controller
         $tramiteTipoId = $request->input('tramiteTipo');
 
         $paso_num = $request->input('paso')?? 1;
+        
         $paso_data = $request->input('datos')?? abort(404); // Si no paso la data tiramos error
 
         // TODO: Factory Pattern: Validar tramites_tipos, pasos y que rol puede acceder
         $request->user()->authorizeRoles(['user', 'admin']);
 
         // Si viene con tramite, entonces hay que actualizarlo en mongoBD
-        if(!empty($tramite_id) && !empty($tramiteTipoId))
+        if(!empty($tramite_id) && is_numeric($tramite_id) && !empty($tramiteTipoId))
         {
             // Primero nos aseguramos de que el tramite exista en bd relacional
             $tramite = Tramite::where([
@@ -101,10 +107,27 @@ class TramiteController extends Controller
 
             $tramite_id = $tramite->id;
         }
+
+
         $tramiteTipo = TramiteTipo::where(['id'=>$tramiteTipoId])->first() ?? abort(404);
 
         $mongoTramite = $this->tramiteService->saveDataMongoTramite($tramite_id, $tramiteTipoId, $paso_data, $paso_num);
         
+
+
+
+        /*Factory Pattern para la creación de Pasos para validar y otras cosas...*/
+        $pasoFactory = PasoFactoryProducer::getFactory($tramiteTipoId);
+        // Obtiene un objeto Paso y llama al método update
+        $paso = $pasoFactory->getPaso($paso_num);
+
+        $paso->update($mongoTramite, $request->all()); // Valida y actualiza datos del paso (files, etc)
+
+        $mongoTramite->save(); // Ahora sí guardamos!
+
+
+
+
         $nextPaso = $this->tramiteService->getNextPaso($tramite, $mongoTramite, $tramiteTipo);
         $lastPasoCompleted = $mongoTramite->getLastPasoCompleted();
 
@@ -115,7 +138,9 @@ class TramiteController extends Controller
 
         // TODO: Mostrar los datos actuales que guardó (paso actual)
         // TODO: Pasar al siguiente paso
+        // dd(route('tramite', ['tramiteTipo'=> $tramiteTipo, 'tramite'=>$tramite]));
         return redirect()->route('tramite', ['tramiteTipo'=> $tramiteTipo, 'tramite'=>$tramite]);
+
         
     }
 

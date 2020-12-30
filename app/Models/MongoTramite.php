@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model as MongoModel;
+use App\Traits\HasFiles;
+
 
 class MongoTramite extends MongoModel
 {
+    use HasFiles;
+
     protected $collection = 'tramites';
     protected $connection = 'mongodb';
 
