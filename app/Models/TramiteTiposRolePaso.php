@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Tramite extends Model
+class TramiteTiposRolePaso extends Model
 {
     use HasFactory;
 
@@ -21,10 +20,4 @@ class Tramite extends Model
         return $this
             ->belongsTo('App\Models\TramiteTipo');
     }
-
-/*    public function toArray(){
-        return [
-            'id' => $this->id
-        ];
-    }*/
 }

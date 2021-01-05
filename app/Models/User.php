@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Form\Paso;
 
 class User extends Authenticatable
 {
@@ -59,7 +60,10 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-
+    /**
+     * Description
+     * @return type
+     */
     public function roles()
     {
         return $this
@@ -67,6 +71,39 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    /**
+     * Description
+     * @return type
+     */
+    public function tramite()
+    {
+        return $this
+            ->hasOne('App\Models\Tramite');
+    }
+
+    /**
+     * Description
+     * @param Paso $paso 
+     * @return type
+     */
+    public function isAuthorizePaso(Paso $paso)
+    {
+        // Si es su ultimo paso, devolvemos false
+        if($paso->isLastPasoFor($this->roles()))
+        {
+            return false;
+        }
+        // Si no es su ultimo paso, validamos que tenga permiso.
+        // TODO: Esto debería ser al reves? Validar permiso y desues fijarse si es el último?
+        return $this->authorizeRoles($paso->getAuthorizeRoles());
+        
+    }
+
+    /**
+     * Description
+     * @param type $roles 
+     * @return type
+     */
     public function authorizeRoles($roles)
     {
         if ($this->hasAnyRole($roles)) {
@@ -75,6 +112,11 @@ class User extends Authenticatable
         abort(401, 'Esta acción no está autorizada.');
     }
 
+    /**
+     * Description
+     * @param type $roles 
+     * @return type
+     */
     public function hasAnyRole($roles)
     {
         if (is_array($roles)) {
@@ -90,7 +132,12 @@ class User extends Authenticatable
         }
         return false;
     }
-    
+
+    /**
+     * Description
+     * @param type $role 
+     * @return type
+     */
     public function hasRole($role)
     {
         if ($this->roles()->where('name', $role)->first()) {
@@ -99,9 +146,5 @@ class User extends Authenticatable
         return false;
     }
 
-    public function tramite()
-    {
-        return $this
-            ->hasOne('App\Models\Tramite');
-    }
+    
 }

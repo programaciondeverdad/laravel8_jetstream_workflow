@@ -1,0 +1,17 @@
+Pendientes de clase para el miercoles:
+¿Qué hice?
+    Armé los HTMLs del paso 1 y 2 de Certificado de Ausencia
+    Agregué el select de  Tipos de Documentos
+
+
+tengo que seguir con los paises con json, ajax y axios
+
+¿Qué falta?
+    ✅ Compilar npm run watch.
+    Hacer los selectores de:
+        Paises
+    ✅    Tipos de Documentos de Identidad
+    Poner todas las variables en vue.js para bindear con v-model.
+    Hacer la lógica de Upload de Files en frontend
+    Hacer la lógica de Upload de Files en Backend
+    Armar los HTMLs de paso 3 y 4 de Certificado de Ausencia

@@ -61,8 +61,6 @@ class TramiteService
         $mongoTramite->pasos =  array_merge($mongoTramite->pasos?? [], $newPaso);
 
 
-        $mongoTramite->save();
-
         return $mongoTramite;
     }
 
