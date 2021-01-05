@@ -62,6 +62,7 @@ class TramiteController extends Controller
          * Si tiene permiso para ver lo dejamos continuar
          * Si no tiene permiso para ver, abortamos con error de permiso
         */
+        // dd($request->user()->isAuthorizePaso($paso));
         if(!$request->user()->isAuthorizePaso($paso))
         {
             // Redireccionamos a home

@@ -3,6 +3,10 @@
 namespace App\Form;
 
 use App\Models\MongoTramite;
+use App\Models\Role;
+use App\Models\TramiteTipo;
+use App\Services\TramiteTiposRolePasoService;
+use App\Repositories\TramiteTiposRolePasoRepository;
 
 abstract class Paso
 {
@@ -14,8 +18,10 @@ abstract class Paso
     protected $paso_numero;
     protected $tramite_tipo_id;
 
-    public function __construct(TramiteTiposRolePasoService $tramiteTiposRolePasoService)
+    public function __construct()
     {
+        $tramiteTiposRolePasoRepository = new TramiteTiposRolePasoRepository();
+        $tramiteTiposRolePasoService = new TramiteTiposRolePasoService($tramiteTiposRolePasoRepository);
         $this->tramiteTiposRolePasoService = $tramiteTiposRolePasoService;
     }
 
@@ -86,21 +92,29 @@ abstract class Paso
     public function isLastPasoFor($roles)
     {
         $anyIsLastPaso = false;
-        if (is_array($roles)) {
-            foreach ($roles as $role) {
-                $isLastPaso = $this->tramiteTiposRolePasoService->isLastPasoFor($this->tramite_tipo, $role, $this->paso_numero);
+        if (is_iterable($roles->get())) {
+            foreach ($roles->get() as $role) {
+                $isLastPaso = $this->tramiteTiposRolePasoService->isLastPasoFor($this->getTramiteTipo(), $role, $this->paso_numero);
                 if ($isLastPaso === true) {
                     $anyIsLastPaso = true;
                 }
             }
             return $anyIsLastPaso;
         } else {
-            $isLastPaso = $this->tramiteTiposRolePasoService->isLastPasoFor($this->tramite_tipo, $roles, $this->paso_numero);
+            $isLastPaso = $this->tramiteTiposRolePasoService->isLastPasoFor($this->getTramiteTipo(), $roles, $this->paso_numero);
             if ($isLastPaso) {
                 return true;
             }
         }
         return false;
+    }
+
+    public function getTramiteTipo()
+    {
+        return $tramite = TramiteTipo::where([
+                'id' => $this->tramite_tipo_id
+            ])->first() ?? abort(500, "No se configuró el tramite tipo para el paso actual.");
+
     }
    
     

@@ -95,7 +95,7 @@ class User extends Authenticatable
         }
         // Si no es su ultimo paso, validamos que tenga permiso.
         // TODO: Esto debería ser al reves? Validar permiso y desues fijarse si es el último?
-        $this->authorizeRoles($paso->getAuthorizeRoles());
+        return $this->authorizeRoles($paso->getAuthorizeRoles());
         
     }
 

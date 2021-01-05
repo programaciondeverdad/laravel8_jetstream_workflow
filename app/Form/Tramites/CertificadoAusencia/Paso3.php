@@ -10,6 +10,9 @@ use App\Models\MongoTramite;
 
 class Paso3 extends Paso
 {
+    protected $paso_numero = 3;
+    protected $tramite_tipo_id = 1;
+
     protected function validateInputs(array $input)
     {
         // validamos todos los campos del paso 1
