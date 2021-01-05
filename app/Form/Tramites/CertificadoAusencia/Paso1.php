@@ -47,7 +47,7 @@ class Paso1 extends Paso
         }
     }
 
-    public function getAutorizeRoles()
+    public function getAuthorizeRoles()
     {
         return ['user'];
     }

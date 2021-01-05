@@ -23,11 +23,11 @@
 
                     <jet-form-section @submitted="updateTramiteInformation">
                         <template #title>
-                            Profile Information
+                            Información Personal
                         </template>
 
                         <template #description>
-                            Update your account's profile information and email address.
+                            Por favor, complete todos los campos obligatorios para dar de alta su solicitud de ausencia.
                         </template>
 
                         <template #form>
@@ -38,7 +38,7 @@
                                 <jet-input-error :message="form.error('name')" class="mt-2" />
                             </div>
 
-                            <!-- Apelldio -->
+                            <!-- Apellido -->
                             <div class="col-span-6 sm:col-span-4">
                                 <jet-label for="apellido" value="Apellido" />
                                 <jet-input id="apellido" type="text" class="mt-1 block w-full" v-model="form.datos.apellido" autocomplete="apellido" required />
@@ -151,7 +151,7 @@
                             <!-- País -->
                             <div class="col-span-6 sm:col-span-4">
                                 <jet-label for="domicilio_pais" value="País" />
-                                <select id="domicilio_pais" v-model="form.datos.domicilio_pais" class="mt-1 block w-full" @change="onSearch" required >
+                                <select id="domicilio_pais" v-model="form.datos.domicilio_pais" class="mt-1 block w-full" required >
                                     <option disabled value="">Seleccione un país</option>
                                     <option v-for="pais in paises" v-bind:value="pais.name">
                                         {{ pais.name }}
@@ -218,7 +218,7 @@
                     '_method': 'PUT',
                     paso: 1,
                     datos: {
-                        name: this.datos.name,
+                        name: "asdasdasd",
                         email: this.datos.email
                     },
                     tramiteTipo: this.tramiteTipo,
@@ -243,13 +243,13 @@
                     preserveScroll: true
                 });
             },
-            async onSearch () {
+            async loadPaises () {
                 var self = this;
               axios.get(
                 'http://localhost:8000/json/countries.json'
               )
               .then(response => {
-                this.paises = response.data.countries
+                this.paises = response.data.countries;
               });
               
             },
@@ -264,7 +264,7 @@
 
         },
         created: function(){
-            this.onSearch();
+            this.loadPaises();
         }
     }
 </script>

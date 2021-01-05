@@ -24,16 +24,14 @@ class Paso3 extends Paso
 
     protected function validateFileInputs(array $input)
     {
-        return true;
     }
 
     protected function saveFiles(MongoTramite $mongo_tramite, array $input)
     {
-        return true;
     }
 
-    public function getAutorizeRoles()
+    public function getAuthorizeRoles()
     {
-        return ['admin'];
+        return ['user', 'admin'];
     }
 }

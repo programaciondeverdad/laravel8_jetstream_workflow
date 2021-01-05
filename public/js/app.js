@@ -4562,7 +4562,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         '_method': 'PUT',
         paso: 1,
         datos: {
-          name: this.datos.name,
+          name: "asdasdasd",
           email: this.datos.email
         },
         tramiteTipo: this.tramiteTipo,
@@ -4586,7 +4586,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         preserveScroll: true
       });
     },
-    onSearch: function onSearch() {
+    loadPaises: function loadPaises() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -4621,7 +4621,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    this.onSearch();
+    this.loadPaises();
   }
 });
 
@@ -50780,7 +50780,7 @@ var render = function() {
                     fn: function() {
                       return [
                         _vm._v(
-                          "\n                        Profile Information\n                    "
+                          "\n                        Información Personal\n                    "
                         )
                       ]
                     },
@@ -50791,7 +50791,7 @@ var render = function() {
                     fn: function() {
                       return [
                         _vm._v(
-                          "\n                        Update your account's profile information and email address.\n                    "
+                          "\n                        Por favor, complete todos los campos obligatorios para dar de alta su solicitud de ausencia.\n                    "
                         )
                       ]
                     },
@@ -51423,29 +51423,24 @@ var render = function() {
                                 staticClass: "mt-1 block w-full",
                                 attrs: { id: "domicilio_pais", required: "" },
                                 on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.$set(
-                                        _vm.form.datos,
-                                        "domicilio_pais",
-                                        $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      )
-                                    },
-                                    _vm.onSearch
-                                  ]
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form.datos,
+                                      "domicilio_pais",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
                                 }
                               },
                               [

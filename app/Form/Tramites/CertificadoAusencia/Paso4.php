@@ -30,8 +30,8 @@ class Paso4 extends Paso
         return true;
     }
 
-    public function getAutorizeRoles()
+    public function getAuthorizeRoles()
     {
-        return ['admin'];
+        return ['user', 'admin'];
     }
 }

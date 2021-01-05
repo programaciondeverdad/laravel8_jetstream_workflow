@@ -29,7 +29,7 @@ class TramiteController extends Controller
     }
 
     /**
-     * Vista que permite roles de user y admin
+     * Vista que renderiza la pantalla del tramite actual
      *
      * @param Request $request
      * @return \Illuminate\View\View
@@ -54,10 +54,19 @@ class TramiteController extends Controller
 
         /*Factory Pattern para la creación de Pasos para validar y otras cosas...*/
         $pasoFactory = PasoFactoryProducer::getFactory($tramiteTipo->id);
-        // Obtiene un objeto Paso y llama al método getAutorizeRoles
+        // Obtiene un objeto Paso y llama al método getAuthorizeRoles
+        
         $paso = $pasoFactory->getPaso($nextPaso);
-
-        $request->user()->authorizeRoles($paso->getAutorizeRoles());
+        /**
+         * Si está en el ultimo paso permitido para este usuario, redireccionamos a home
+         * Si tiene permiso para ver lo dejamos continuar
+         * Si no tiene permiso para ver, abortamos con error de permiso
+        */
+        if(!$request->user()->isAuthorizePaso($paso))
+        {
+            // Redireccionamos a home
+            return redirect()->route('home');
+        }
         
         // TODO: Agregar validación usuario creador del tramite?
         return Inertia::render("Tramites/{$tramiteTipo->slug}/paso{$nextPaso}", [
