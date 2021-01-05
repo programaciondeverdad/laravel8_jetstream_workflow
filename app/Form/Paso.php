@@ -5,24 +5,24 @@ namespace App\Form;
 use App\Models\MongoTramite;
 use App\Models\Role;
 use App\Models\TramiteTipo;
-use App\Services\TramiteTiposRolePasoService;
-use App\Repositories\TramiteTiposRolePasoRepository;
+use App\Services\TramiteTiposRolePasosService;
+use App\Repositories\TramiteTiposRolePasosRepository;
 
 abstract class Paso
 {
     /**
-     * @var TramiteTiposRolePasoService
+     * @var TramiteTiposRolePasosService
      */
-    protected $tramiteTiposRolePasoService;
+    protected $TramiteTiposRolePasosService;
 
     protected $paso_numero;
     protected $tramite_tipo_id;
 
     public function __construct()
     {
-        $tramiteTiposRolePasoRepository = new TramiteTiposRolePasoRepository();
-        $tramiteTiposRolePasoService = new TramiteTiposRolePasoService($tramiteTiposRolePasoRepository);
-        $this->tramiteTiposRolePasoService = $tramiteTiposRolePasoService;
+        $TramiteTiposRolePasosRepository = new TramiteTiposRolePasosRepository();
+        $TramiteTiposRolePasosService = new TramiteTiposRolePasosService($TramiteTiposRolePasosRepository);
+        $this->TramiteTiposRolePasosService = $TramiteTiposRolePasosService;
     }
 
     /**
@@ -94,14 +94,14 @@ abstract class Paso
         $anyIsLastPaso = false;
         if (is_iterable($roles->get())) {
             foreach ($roles->get() as $role) {
-                $isLastPaso = $this->tramiteTiposRolePasoService->isLastPasoFor($this->getTramiteTipo(), $role, $this->paso_numero);
+                $isLastPaso = $this->TramiteTiposRolePasosService->isLastPasoFor($this->getTramiteTipo(), $role, $this->paso_numero);
                 if ($isLastPaso === true) {
                     $anyIsLastPaso = true;
                 }
             }
             return $anyIsLastPaso;
         } else {
-            $isLastPaso = $this->tramiteTiposRolePasoService->isLastPasoFor($this->getTramiteTipo(), $roles, $this->paso_numero);
+            $isLastPaso = $this->TramiteTiposRolePasosService->isLastPasoFor($this->getTramiteTipo(), $roles, $this->paso_numero);
             if ($isLastPaso) {
                 return true;
             }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TramiteTiposRolePaso extends Migration
+class TramiteTiposRolePasos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class TramiteTiposRolePaso extends Migration
      */
     public function up()
     {
-        Schema::create('tramite_tipos_role_paso', function (Blueprint $table) {
+        Schema::create('tramite_tipos_role_pasos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('role_id')->nullable()->index(); // role
             $table->foreignId('tramite_tipos_id')->nullable()->index(); // tramite_tipo
             $table->integer('paso');
+            $table->string('estado')->default('A');
             $table->timestamps();
         });
     }
@@ -29,7 +30,7 @@ class TramiteTiposRolePaso extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tramite_tipos_role_paso');
+        Schema::dropIfExists('tramite_tipos_role_pasos');
         //
     }
 }

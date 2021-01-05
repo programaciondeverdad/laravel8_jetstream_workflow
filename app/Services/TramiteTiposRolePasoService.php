@@ -6,17 +6,17 @@
 
 namespace App\Services;
 
-use App\Repositories\TramiteTiposRolePasoRepository;
+use App\Repositories\TramiteTiposRolePasosRepository;
 use App\Models\TramiteTipo;
 use App\Models\Role;
 
-class TramiteTiposRolePasoService
+class TramiteTiposRolePasosService
 {
-    protected $tramiteTiposRolePasoRepository;
+    protected $TramiteTiposRolePasosRepository;
     
-    public function __construct(TramiteTiposRolePasoRepository $tramiteTiposRolePasoRepository)
+    public function __construct(TramiteTiposRolePasosRepository $TramiteTiposRolePasosRepository)
     {
-        $this->tramiteTiposRolePasoRepository = $tramiteTiposRolePasoRepository;
+        $this->TramiteTiposRolePasosRepository = $TramiteTiposRolePasosRepository;
     }
 
     /* 
@@ -26,7 +26,7 @@ class TramiteTiposRolePasoService
     */
     public function isLastPasoFor(TramiteTipo $tramiteTipo, Role $role, int $paso_actual)
     {
-        $paso_maximo = $this->tramiteTiposRolePasoRepository->findMaxPasoByTramiteTipoAndRole($tramiteTipo, $role);
+        $paso_maximo = $this->TramiteTiposRolePasosRepository->findMaxPasoByTramiteTipoAndRole($tramiteTipo, $role);
         // dd($paso_maximo, $paso_actual);
         return intval($paso_maximo) < $paso_actual;
     }

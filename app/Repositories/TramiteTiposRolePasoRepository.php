@@ -5,10 +5,10 @@ namespace App\Repositories;
 use App\Models\Role;
 use App\Models\Tramite;
 use App\Models\TramiteTipo;
-use App\Models\TramiteTiposRolePaso;
+use App\Models\TramiteTiposRolePasos;
 use App\Models\MongoTramite;
 
-class TramiteTiposRolePasoRepository
+class TramiteTiposRolePasosRepository
 {
 
     /*
@@ -16,7 +16,7 @@ class TramiteTiposRolePasoRepository
     */
     public function findPasos(TramiteTipo $tramiteTipo, Role $role)
     {
-        $entity = TramiteTiposRolePaso::where([
+        $entity = TramiteTiposRolePasos::where([
                 'tramite_tipos_id' => $tramiteTipo->id,
                 'role_id'  => $role->id
             ])->all() ?? null;
@@ -29,7 +29,7 @@ class TramiteTiposRolePasoRepository
     */
     public function findMaxPasoByTramiteTipoAndRole(TramiteTipo $tramiteTipo, Role $role)
     {
-        $entity = TramiteTiposRolePaso::where([
+        $entity = TramiteTiposRolePasos::where([
                 'tramite_tipos_id' => $tramiteTipo->id,
                 'role_id'  => $role->id,
                 'estado' => 'A'
