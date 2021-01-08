@@ -30,4 +30,28 @@ class TramiteTiposRolePasosService
         // dd($paso_maximo, $paso_actual);
         return intval($paso_maximo) < $paso_actual;
     }
+
+
+    /**
+    Buscamos todos los roles permitidos para un tramite_tipo + paso
+    */
+    public function getAuthorizeRolesByPaso(TramiteTipo $tramiteTipo, int $paso_actual)
+    {
+        $tramiteTiposRolePasos = $this->TramiteTiposRolePasosRepository->getRolesByPaso($tramiteTipo, $paso_actual);
+
+        $roles = [];
+
+        /* Recorro todo el resultado de la búsqueda y 
+        creo un array con todos los nombres de los roles */
+        array_map(function($entity) use $roles {
+            $role = Role::where([
+                'id' => $entity->role_id
+            ])->first() ?? null;
+
+            ;
+            $roles[] = $role->name;
+        }, $tramiteTiposRolePasos);
+
+        return $roles;
+    }
 }

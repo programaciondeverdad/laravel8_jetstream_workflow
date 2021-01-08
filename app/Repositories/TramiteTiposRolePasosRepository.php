@@ -39,6 +39,14 @@ class TramiteTiposRolePasosRepository
 
 
 
-    
+    public function getRolesByPaso(TramiteTipo $tramiteTipo, int $paso_actual)
+    {
+        $tramiteTiposRolePasos = TramiteTiposRolePasos::where([
+                'tramite_tipos_id' => $tramiteTipo->id,
+                'paso'  => $paso_actual,
+                'estado' => 'A'
+            ])->get() ?? [];
+        return $tramiteTiposRolePasos;
+    }
     
 }
