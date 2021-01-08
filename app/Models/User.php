@@ -88,11 +88,7 @@ class User extends Authenticatable
      */
     public function isAuthorizePaso(Paso $paso)
     {
-        // Si es su ultimo paso, devolvemos false
-        if($paso->isLastPasoFor($this->roles()))
-        {
-            return false;
-        }
+        
         // Si no es su ultimo paso, validamos que tenga permiso.
         // TODO: Esto debería ser al reves? Validar permiso y desues fijarse si es el último?
         return $this->authorizeRoles($paso->getAuthorizeRoles());
