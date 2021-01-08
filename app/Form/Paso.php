@@ -89,26 +89,30 @@ abstract class Paso
 
     /**
      * isLastPasoFor a User
-     * @return type
+     * @return boolean
      */
     public function isLastPasoFor($roles)
     {
         $anyIsLastPaso = false;
         if (is_iterable($roles->get())) {
             foreach ($roles->get() as $role) {
-                $isLastPaso = $this->TramiteTiposRolePasosService->isLastPasoFor($this->getTramiteTipo(), $role, $this->paso_numero);
-                if ($isLastPaso === true) {
+                $searchIsLastPaso = $this->searchIsLastPaso($role);
+                if ($searchIsLastPaso === true) {
                     $anyIsLastPaso = true;
                 }
             }
-            return $anyIsLastPaso;
-        } else {
-            $isLastPaso = $this->TramiteTiposRolePasosService->isLastPasoFor($this->getTramiteTipo(), $roles, $this->paso_numero);
-            if ($isLastPaso) {
-                return true;
-            }
         }
-        return false;
+        else {
+            $anyIsLastPaso = $this->searchIsLastPaso($roles);
+        }
+
+
+        return $anyIsLastPaso;
+    }
+
+
+    private function searchIsLastPaso($role){
+        return $this->TramiteTiposRolePasosService->isLastPasoFor($this->getTramiteTipo(), $role, $this->paso_numero);
     }
 
     public function getTramiteTipo()

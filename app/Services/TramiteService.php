@@ -69,4 +69,27 @@ class TramiteService
     {
         return $nextPaso == $lastPasoCompleted;
     }
+
+    public function getTramiteCreateOrUpdate($tramite_id, $tramiteTipoId)
+    {
+         // Si viene con tramite, entonces hay que actualizarlo en mongoBD
+        if(!empty($tramite_id) && is_numeric($tramite_id) && !empty($tramiteTipoId))
+        {
+            // Primero nos aseguramos de que el tramite exista en bd relacional
+            $tramite = Tramite::where([
+                'tramite_tipo_id'  => $tramiteTipoId,
+                'id' => $tramite_id,
+            ])->first() ?? abort(404);
+        }
+        else
+        {
+            // o lo creamos
+            $tramite = new Tramite;
+            $tramite->tramite_tipo_id = $tramiteTipoId;
+            $tramite->user_id = $request->user()->id;
+            $tramite->save();
+        }
+
+        return $tramite->id;
+    }
 }

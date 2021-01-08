@@ -43,7 +43,7 @@ class TramiteTiposRolePasosService
 
         /* Recorro todo el resultado de la búsqueda y 
         creo un array con todos los nombres de los roles */
-        array_map(function($entity) use $roles {
+        array_map(function($entity) use ($roles) {
             $role = Role::where([
                 'id' => $entity->role_id
             ])->first() ?? null;

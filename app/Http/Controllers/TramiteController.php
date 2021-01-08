@@ -12,6 +12,7 @@ use App\Models\MongoTramite;
 use App\Repositories\TramiteRepository;
 use App\Services\TramiteService;
 use App\Factories\PasoFactoryProducer;
+use App\Services\TramiteTipoService;
 
 class TramiteController extends Controller
 {
@@ -21,10 +22,12 @@ class TramiteController extends Controller
 
     public function __construct(
         TramiteRepository $tramiteRepository, 
-        TramiteService $tramiteService)
+        TramiteService $tramiteService,
+        TramiteTipoService $tramiteTipoService)
     {
         $this->tramiteRepository = $tramiteRepository;
         $this->tramiteService = $tramiteService;
+        $this->tramiteTipoService = $tramiteTipoService;
         $this->middleware('auth');
     }
 
@@ -62,12 +65,14 @@ class TramiteController extends Controller
          * Si tiene permiso para ver lo dejamos continuar
          * Si no tiene permiso para ver, abortamos con error de permiso
         */
+        // dd($request->user()->roles());
         // dd($request->user()->isAuthorizePaso($paso));
         // Si es su ultimo paso, redirigimos a la página de finalización
-        if($paso->isLastPasoFor($this->roles()))
+        if($paso->isLastPasoFor($request->user()->roles()))
         {
+        // dd("llegas");
             // Redireccionamos a terminaste de cargar todo!
-            return redirect()->route('tramite.finalizacion');
+            return redirect()->route('home');
         }
 
         // Si no tiene permiso para ver el próximo paso, redirigimos a la pagina principal
@@ -106,28 +111,10 @@ class TramiteController extends Controller
         $request->user()->authorizeRoles(['user', 'admin']);
 
         // Si viene con tramite, entonces hay que actualizarlo en mongoBD
-        if(!empty($tramite_id) && is_numeric($tramite_id) && !empty($tramiteTipoId))
-        {
-            // Primero nos aseguramos de que el tramite exista en bd relacional
-            $tramite = Tramite::where([
-                'tramite_tipo_id'  => $tramiteTipoId,
-                'id' => $tramite_id,
-            ])->first() ?? abort(404);
-            $tramite_id = $tramite->id; // Sobreescribimos el id del tramite para usarlo en mongodb
-        }
-        else
-        {
-            // o lo creamos
-            $tramite = new Tramite;
-            $tramite->tramite_tipo_id = $tramiteTipoId;
-            $tramite->user_id = $request->user()->id;
-            $tramite->save();
-
-            $tramite_id = $tramite->id;
-        }
+        $tramite_id = $this->getTramiteCreateOrUpdate($tramite_id, $tramiteTipoId);
 
 
-        $tramiteTipo = TramiteTipo::where(['id'=>$tramiteTipoId])->first() ?? abort(404);
+        $tramiteTipo = $this->tramiteTipoService->find($tramiteTipoId) ?? abort(404);
 
         $mongoTramite = $this->tramiteService->saveDataMongoTramite($tramite_id, $tramiteTipoId, $paso_data, $paso_num);
         
@@ -161,6 +148,8 @@ class TramiteController extends Controller
 
         
     }
+
+    
 
     
     
