@@ -82,7 +82,9 @@ abstract class Paso
      */
     public function getAuthorizeRoles()
     {
-        return ['user', 'admin'];
+        return $this->TramiteTiposRolePasosService->getAuthorizeRolesByPaso($this->getTramiteTipo(), $this->paso_numero);
+        /* Original */
+        // return ['user', 'admin'];
     }
 
     /**

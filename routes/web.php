@@ -49,3 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::middleware(['auth:sanctum', 'verified'])
     ->put('/tramite', [TramiteController::class, 'createOrUpdate'])
     ->name('tramite.update');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/tramite/finalizacion', [HomeController::class, 'index'])
+    ->name('tramite.finalizacion');

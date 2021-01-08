@@ -63,6 +63,14 @@ class TramiteController extends Controller
          * Si no tiene permiso para ver, abortamos con error de permiso
         */
         // dd($request->user()->isAuthorizePaso($paso));
+        // Si es su ultimo paso, redirigimos a la página de finalización
+        if($paso->isLastPasoFor($this->roles()))
+        {
+            // Redireccionamos a terminaste de cargar todo!
+            return redirect()->route('tramite.finalizacion');
+        }
+
+        // Si no tiene permiso para ver el próximo paso, redirigimos a la pagina principal
         if(!$request->user()->isAuthorizePaso($paso))
         {
             // Redireccionamos a home
